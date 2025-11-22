@@ -6,7 +6,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Pop the Lock</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;800&family=JetBrains+Mono:wght@700&display=swap');
         
@@ -19,8 +21,14 @@
             -ms-user-select: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none; /* iOS Safari: disable callouts */
+            -webkit-touch-callout: none;
         }
+
+        /* Safety CSS: Ensure these work even if Tailwind delays */
+        .hidden { display: none !important; }
+        .pointer-events-none { pointer-events: none !important; }
+        .pointer-events-auto { pointer-events: auto !important; }
+        .opacity-0 { opacity: 0 !important; }
         
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
@@ -78,7 +86,7 @@
             </button>
         </div>
 
-        <div id="settingsScreen" class="hidden absolute w-full h-full flex-col items-center justify-start pt-12 pb-10 bg-gray-900/95 pointer-events-auto z-50 transition-all duration-300" style="touch-action: pan-y; overflow-y: auto;">
+        <div id="settingsScreen" class="hidden absolute w-full h-full flex flex-col items-center justify-start pt-12 pb-10 bg-gray-900/95 pointer-events-auto z-50 transition-all duration-300" style="touch-action: pan-y; overflow-y: auto;">
             <div id="settingsContainer" class="w-full max-w-md px-6 flex flex-col gap-8 pb-20">
                 <div class="flex justify-between items-center border-b border-white/10 pb-4">
                     <h2 class="text-2xl font-bold tracking-tight">SETTINGS</h2>
@@ -112,227 +120,3 @@
                             <label class="text-xs text-gray-400">Target/Glow</label>
                             <input type="color" id="customTarget" class="interactive w-6 h-6 rounded-full overflow-hidden bg-transparent cursor-pointer border-none">
                         </div>
-                        <div class="flex justify-between items-center">
-                            <label class="text-xs text-gray-400">Ticker Bar</label>
-                            <input type="color" id="customTicker" class="interactive w-6 h-6 rounded-full overflow-hidden bg-transparent cursor-pointer border-none">
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <label class="text-xs text-gray-400">Text Color</label>
-                            <input type="color" id="customText" class="interactive w-6 h-6 rounded-full overflow-hidden bg-transparent cursor-pointer border-none">
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <label class="text-xs text-gray-400">Flash</label>
-                            <input type="color" id="customProgress" class="interactive w-6 h-6 rounded-full overflow-hidden bg-transparent cursor-pointer border-none">
-                        </div>
-                    </div>
-                    
-                    <button id="saveThemeBtn" class="interactive w-full py-3 mt-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-xs tracking-wide shadow-lg shadow-blue-900/20">SAVE THEME</button>
-                </div>
-
-                <div class="bg-white/5 p-4 rounded-xl border border-white/5 flex justify-between items-center">
-                    <span class="text-sm font-bold text-gray-200">Glass UI Mode</span>
-                    <label class="relative inline-flex items-center cursor-pointer interactive">
-                        <input type="checkbox" id="glassToggle" class="sr-only peer">
-                        <div class="w-10 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
-                    </label>
-                </div>
-
-                <div class="space-y-3">
-                    <h3 class="text-xs uppercase tracking-widest text-gray-400 font-bold pl-1">Difficulty</h3>
-                    <div id="diffGrid" class="flex gap-2 bg-black/20 p-1 rounded-lg">
-                        </div>
-                    
-                    <div id="customDiffEditor" class="hidden space-y-5 bg-gray-800/50 p-5 rounded-2xl mt-2 border border-white/5">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs font-bold text-gray-300">Speed</span>
-                                <span id="customSpeedVal" class="text-xs text-gray-400">Normal</span>
-                            </div>
-                            <input type="range" id="customSpeedRange" min="10" max="60" value="20" class="interactive w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500">
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs font-bold text-gray-300">Dot Size</span>
-                                <span id="customSizeVal" class="text-xs text-gray-400">Normal</span>
-                            </div>
-                            <input type="range" id="customSizeRange" min="15" max="50" value="32" class="interactive w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500">
-                        </div>
-                        
-                        <div class="flex justify-between items-center pt-2 border-t border-white/5">
-                            <span class="text-xs font-bold text-gray-300">Strict Mode</span>
-                            <label class="relative inline-flex items-center cursor-pointer interactive">
-                                <input type="checkbox" id="strictModeToggle" class="sr-only peer">
-                                <div class="w-8 h-5 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-red-500"></div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="space-y-3">
-                    <h3 class="text-xs uppercase tracking-widest text-gray-400 font-bold pl-1">Sound Pack</h3>
-                    <div id="soundGrid" class="grid grid-cols-2 gap-2">
-                        </div>
-                    
-                    <div id="customSoundEditor" class="hidden space-y-4 bg-gray-800/50 p-5 rounded-2xl border border-purple-500/20 mt-2 relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500 opacity-50"></div>
-                        <div class="flex justify-between items-center">
-                             <h4 class="font-bold text-sm text-purple-300">Sound Lab</h4>
-                             <select id="soundTypeSelector" class="interactive bg-black/30 border border-white/10 text-[10px] rounded px-2 py-1 text-gray-300 focus:outline-none">
-                                 <option value="pop">Edit: Pop (Success)</option>
-                                 <option value="fail">Edit: Fail (Death)</option>
-                             </select>
-                        </div>
-                       
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center">
-                                <span class="text-xs text-gray-400">Waveform</span>
-                                <select id="customWaveform" class="interactive bg-black/30 border border-white/10 text-xs rounded px-2 py-1 text-white focus:outline-none">
-                                    <option value="sine">Sine (Smooth)</option>
-                                    <option value="square">Square (Retro)</option>
-                                    <option value="sawtooth">Sawtooth (Sharp)</option>
-                                    <option value="triangle">Triangle (Soft)</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-xs text-gray-400">Start Pitch</span>
-                                    <span id="startFreqVal" class="text-xs text-gray-500">800</span>
-                                </div>
-                                <input type="range" id="startFreq" min="50" max="2000" step="10" class="interactive w-full h-1.5 bg-gray-700 rounded-lg appearance-none accent-purple-500">
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-xs text-gray-400">End Pitch</span>
-                                    <span id="endFreqVal" class="text-xs text-gray-500">1200</span>
-                                </div>
-                                <input type="range" id="endFreq" min="50" max="2000" step="10" class="interactive w-full h-1.5 bg-gray-700 rounded-lg appearance-none accent-purple-500">
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-xs text-gray-400">Duration</span>
-                                    <span id="durationVal" class="text-xs text-gray-500">0.1s</span>
-                                </div>
-                                <input type="range" id="soundDuration" min="0.05" max="1.0" step="0.05" class="interactive w-full h-1.5 bg-gray-700 rounded-lg appearance-none accent-purple-500">
-                            </div>
-                            
-                            <button id="testSoundBtn" class="interactive w-full py-2 bg-purple-600/80 hover:bg-purple-600 rounded-lg font-bold text-xs tracking-wide transition">TEST SOUND</button>
-                        </div>
-                    </div>
-                </div>
-                
-
-            </div>
-        </div>
-
-        <div id="gameOverScreen" class="hidden absolute w-full h-full flex flex-col items-center justify-center z-40 bg-black/80 backdrop-blur-sm transition-all duration-500 p-6 pointer-events-auto">
-            <div id="gameOverCard" class="relative w-full max-w-sm p-8 rounded-3xl flex flex-col items-center text-center transition-all duration-300 bg-gray-900 border border-gray-800 shadow-2xl">
-                
-                <h2 class="text-5xl font-black text-red-500 mb-1 tracking-tighter" style="text-shadow: 0 0 25px rgba(239,68,68,0.3);">FAILED</h2>
-                <p class="text-xs text-gray-500 uppercase tracking-[0.2em] mb-8 font-bold">Game Over</p>
-                
-                <div class="flex items-end justify-center gap-2 mb-8 w-full">
-                    <div class="flex flex-col items-center bg-white/5 p-4 rounded-2xl w-1/2 border border-white/5">
-                        <span class="text-gray-400 text-[10px] uppercase tracking-widest font-bold mb-1">Score</span>
-                        <span id="finalScore" class="text-4xl font-bold text-white">12</span>
-                    </div>
-                    <div class="flex flex-col items-center bg-white/5 p-4 rounded-2xl w-1/2 border border-white/5">
-                        <span class="text-gray-400 text-[10px] uppercase tracking-widest font-bold mb-1">Remaining</span>
-                        <span id="remainingScore" class="text-4xl font-bold text-yellow-500">38</span>
-                    </div>
-                </div>
-                
-                <button id="retryBtn" class="interactive w-full py-4 rounded-xl text-lg font-black bg-white text-black shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all mb-3">
-                    TRY AGAIN
-                </button>
-                <button id="menuBtn" class="interactive w-full py-3 rounded-xl text-sm font-bold text-gray-400 hover:bg-white/5 hover:text-white transition-all">
-                    MAIN MENU
-                </button>
-            </div>
-        </div>
-
-        <div id="winScreen" class="hidden absolute w-full h-full flex flex-col items-center justify-center z-40 bg-black/80 backdrop-blur-sm transition-all duration-500 p-6 pointer-events-auto">
-            <div id="winCard" class="relative w-full max-w-sm p-8 rounded-3xl flex flex-col items-center text-center transition-all duration-300 bg-gray-900 border border-gray-800 shadow-2xl">
-                
-                <h2 class="text-5xl font-black text-green-400 mb-2 tracking-tighter" style="text-shadow: 0 0 25px rgba(74,222,128,0.3);">UNLOCKED</h2>
-                <p class="text-sm text-gray-400 mb-8">All 50 Dots Popped!</p>
-                
-                <div class="mb-8">
-                    <div class="text-6xl">🔓</div>
-                </div>
-                
-                <button id="playAgainBtn" class="interactive w-full py-4 rounded-xl text-lg font-black bg-white text-black shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all mb-3">
-                    PLAY AGAIN
-                </button>
-                <button id="menuBtnWin" class="interactive w-full py-3 rounded-xl text-sm font-bold text-gray-400 hover:bg-white/5 hover:text-white transition-all">
-                    MAIN MENU
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        // UI Elements
-        const uiLayer = document.getElementById('uiLayer');
-        const startScreen = document.getElementById('startScreen');
-        const settingsScreen = document.getElementById('settingsScreen');
-        const settingsContainer = document.getElementById('settingsContainer');
-        const gameOverScreen = document.getElementById('gameOverScreen');
-        const winScreen = document.getElementById('winScreen');
-        const scoreDisplay = document.getElementById('scoreDisplay');
-        
-        // Cards
-        const gameOverCard = document.getElementById('gameOverCard');
-        const winCard = document.getElementById('winCard');
-        
-        // Buttons
-        const startBtn = document.getElementById('startBtn');
-        const settingsBtn = document.getElementById('settingsBtn');
-        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-        const retryBtn = document.getElementById('retryBtn');
-        const playAgainBtn = document.getElementById('playAgainBtn');
-        const menuBtn = document.getElementById('menuBtn');
-        const menuBtnWin = document.getElementById('menuBtnWin');
-        const finalScoreEl = document.getElementById('finalScore');
-        
-        const gameTitle = document.getElementById('gameTitle');
-        const gameInstruction = document.getElementById('gameInstruction');
-        const instrBar = document.getElementById('instrBar');
-        const instrDot = document.getElementById('instrDot');
-        
-        const themeGrid = document.getElementById('themeGrid');
-        const diffGrid = document.getElementById('diffGrid');
-        const soundGrid = document.getElementById('soundGrid');
-        
-        const customThemeEditor = document.getElementById('customThemeEditor');
-        const customDiffEditor = document.getElementById('customDiffEditor');
-        const deleteThemeBtn = document.getElementById('deleteThemeBtn');
-        const saveThemeBtn = document.getElementById('saveThemeBtn');
-        
-        const customSpeedRange = document.getElementById('customSpeedRange');
-        const customSpeedVal = document.getElementById('customSpeedVal');
-        const customSizeRange = document.getElementById('customSizeRange');
-        const customSizeVal = document.getElementById('customSizeVal');
-        const glassToggle = document.getElementById('glassToggle');
-        
-        // Sound Editor
-        const customSoundEditor = document.getElementById('customSoundEditor');
-        const customWaveform = document.getElementById('customWaveform');
-        const startFreqRange = document.getElementById('startFreq');
-        const endFreqRange = document.getElementById('endFreq');
-        const soundDurationRange = document.getElementById('soundDuration');
-        const testSoundBtn = document.getElementById('testSoundBtn');
-        const startFreqVal = document.getElementById('startFreqVal');
-        const endFreqVal = document.getElementById('endFreqVal');
-        const durationVal = document.getElementById('durationVal');
-
-        // Data
-        const THEMES = {
-            'ARCADE': { name: 'Arcade', bg: '#111827', lock: '#374151', target: '#facc15', ticker: '#ef4444', text: '#ffffff', progress: '#22c55e' },
-            'MINIMAL': { name: 'Minimal', bg: '#f3f4f6', lock: '#d1d5db', target: '#3b82f6', ticker: '#1f2937', text: '#1f2937', progress: '#10b981' },
-            'NEON': { name: 'Neon', bg: '#00000
